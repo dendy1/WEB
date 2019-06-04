@@ -1,11 +1,19 @@
 import os
 
-def get_drives():
+class file:
+    def __init__(self, directory, name):
+        self.directory = directory
+        self.name = name
+
+    def __str__(self):
+        return self.directory + '\\' + self.name
+
+def get_drives_letters():
     letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     drives = ['%s:' % d for d in letters if os.path.exists('%s:' % d)]
     return drives
 
-def search_in_directory(file_name, directory_name):
+def search_file_in_dir(file_name, directory_name):
     try:
         for element in os.scandir(directory_name):
             if element.is_file():
@@ -24,13 +32,13 @@ def search_in_directory(file_name, directory_name):
                     if new_file_name in element.name:
                         yield file(directory_name, element.name)
             else:
-                yield from search_in_directory(file_name, element.path)
+                yield from search_file_in_dir(file_name, element.path)
     except PermissionError:
         pass
     except NotADirectoryError:
         pass
 
-def search_in_list(file_name, pathes):
+def search_file_in_list_of_dirs(file_name, pathes):
     for path in pathes:
         elementName = path.name
         directoryName = path.directory
@@ -50,39 +58,31 @@ def search_in_list(file_name, pathes):
             if new_file_name in elementName:
                 yield file(directoryName, elementName)
 
-def __get_all_files_directory(directory):
+def __get_list_of_all_files(directory):
     try:
         for element in os.scandir(directory):
             if element.is_file():
                 yield file(directory, element.name)
             else:
-                yield from __get_all_files_directory(element.path)
+                yield from __get_list_of_all_files(element.path)
     except PermissionError:
         pass
     except NotADirectoryError:
         pass
 
-def get_all_files():
-    drives = get_drives()
+def get_all_files_list():
+    drives = get_drives_letters()
     allFiles = []
 
     for driveLetter in drives:
-        for path in __get_all_files_directory(driveLetter + "\\"):
+        for path in __get_list_of_all_files(driveLetter + "\\"):
             allFiles.append(path)
 
     return allFiles
 
 def search_all_drives(file_name):
-    drives = get_drives()
+    drives = get_drives_letters()
 
     for drive in drives:
-        for path in search_in_directory(file_name, drive + "\\"):
+        for path in search_file_in_dir(file_name, drive + "\\"):
             yield path
-
-class file:
-    def __init__(self, directory, name):
-        self.directory = directory
-        self.name = name
-
-    def __str__(self):
-        return self.directory + '\\' + self.name

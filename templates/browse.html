@@ -5,7 +5,7 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <ul class="tabs">
     {% for item in itemList: %}
-        <li><a href="/browser{{ urlFilePath }}/{{ item }}">{{ item }}</a></li>
+        <li><a href="/{{ currentPath }}/{{ item }}">{{ item }}</a></li>
     {% endfor %}
 </ul>
 
