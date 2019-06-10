@@ -17,19 +17,26 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
-    <div class="container">
-        <a class="navbar-brand" href="{{ url_for('browse') }}">ROOT</a>
-        <a class="navbar-brand" href="{{ url_for('browse', req_path = current_path.previous_path) }}">BACK</a>
 
-        <ul class="breadcrumb">
-            {% for url, text in current_path.breadcrumbs %}
-                <li class="breadcrumb-item"><a href="{{ url_for('browse', req_path = url) }}">{{ text }}</a></li>
-            {% endfor %}
+    <div class="navbar-collapse collapse justify-content-between">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="navbar-brand h1" href="{{ url_for('browse') }}">ROOT</a></li>
+            <li class="nav-item"><a class="navbar-brand h1" href="#">|</a></li>
+            <li class="nav-item"><a class="navbar-brand h1" href="{{ url_for('browse', req_path = current_path.previous_path) }}">UP ONE LEVEL</a></li>
         </ul>
-
-        {% block search %}
-        {% endblock %}
     </div>
+
+    <div class="navbar-collapse collapse w-100">
+         <ul class="breadcrumb mx-auto">
+            {% for url, text in current_path.breadcrumbs %}
+                <li class="breadcrumb-item mx-auto"><a href="{{ url_for('browse', req_path = url) }}">{{ text }}</a></li>
+            {% endfor %}
+         </ul>
+    </div>
+
+    {% block search %}
+    {% endblock %}
+
 </nav>
 
 <div class="center">
