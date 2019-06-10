@@ -1,6 +1,56 @@
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-<ul class="tabs">
-    {% for path in pathes: %}
-        <li><a href="/browser/{{ path }}" download>{{ path.directory }}\{{ path.name }}</a></li>
-    {% endfor %}
-</ul>
+{% extends "mainlayout.html" %}
+
+{% block search %}
+   <div id="progress_wrapper" class="d-none">
+          <label id="progress_status"></label>
+          <div class="progress mb-3">
+            <div id="progress" class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+   </div>
+{% endblock %}
+
+{% block body %}
+
+<script src="{{ url_for('static', filename='js/grid.js') }}"></script>
+
+    <div class="row">
+        <div class="col-lg-12 my-3">
+            <div class="pull-right">
+                <div class="btn-group">
+                    <button class="btn btn-info" id="list">
+                        List View
+                    </button>
+                    <button class="btn btn-danger" id="grid">
+                        Grid View
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="products" class="row view-group">
+        {% for item in item_list: %}
+            <div class="item col-xs-2 col-lg-2">
+                <div class="thumbnail card">
+
+                    <div class="img-event">
+                           <a href="{{ url_for('browse', req_path = item.path) }}">
+                                   <object align="center" class="group list-group-image img-fluid" data="{{  url_for('static', filename=item.icon) }}" type="image/png">
+                                    <img align="center" class="group list-group-image img-fluid" src="{{ url_for('static', filename=item.default_icon) }}" alt=""/>
+                              </object>
+                        </a>
+                    </div>
+
+                    <div class="caption card-body">
+                        <a href="{{ url_for('browse', req_path = item.path) }}">
+                            <h4 align="center" class="group card-title inner list-group-item-heading">{{ item.name }}</h4>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

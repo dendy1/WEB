@@ -1,12 +1,10 @@
-{% extends "layout.html" %}
+{% extends "mainlayout.html" %}
 
 {% block body %}
 
-<script src="http://code.jquery.com/jquery-latest.js"></script>
 <ul class="tabs">
-    <p>Current file: {{ currentFile }}</p>
-
-    <a href="{{ url_for('download', path = currentFile) }}" class="btn btn-info" role="button"><i class="fa fa-download"></i> Link Button</a>
+    <p>Current file: {{ current_path.path }}</p>
+    <a href="{{ url_for('download', path = current_path.path) }}" class="btn btn-info" role="button"><i class="fa fa-download"></i> Download</a>
 </ul>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

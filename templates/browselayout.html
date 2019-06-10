@@ -1,0 +1,13 @@
+{% extends "mainlayout.html" %}
+
+{% block search %}
+<form class="form-inline my-2 my-lg-0" action="{{ url_for('search') }}" method="GET">
+    <ul class="nav navbar-nav navbar-right">
+        <li><input class="form-check-input" type="checkbox" id="rootCheckbox" name="r"></li>
+        <li><label class="form-check-label" for="rootCheckbox">Search in ROOT</label></li>
+        <li><input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="q"></li>
+        <li><input class="form-control mr-sm-2" type="hidden" name="p" value="{{ current_path.path }}"></li>
+        <li><input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search"></li>
+    </ul>
+</form>
+{% endblock %}
