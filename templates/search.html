@@ -13,43 +13,28 @@
 
 <script src="{{ url_for('static', filename='js/grid.js') }}"></script>
 
-    <div class="row">
-        <div class="col-lg-12 my-3">
-            <div class="pull-right">
-                <div class="btn-group">
-                    <button class="btn btn-info" id="list">
-                        List View
-                    </button>
-                    <button class="btn btn-danger" id="grid">
-                        Grid View
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="products" class="row view-group">
+    <ul class="list-group">
         {% for item in item_list: %}
-            <div class="item col-xs-2 col-lg-2">
-                <div class="thumbnail card">
 
-                    <div class="img-event">
-                           <a href="{{ url_for('browse', req_path = item.path) }}">
-                                   <object align="center" class="group list-group-image img-fluid" data="{{  url_for('static', filename=item.icon) }}" type="image/png">
-                                    <img align="center" class="group list-group-image img-fluid" src="{{ url_for('static', filename=item.default_icon) }}" alt=""/>
-                              </object>
-                        </a>
-                    </div>
+        <li class="list-group-item">
+            <div class="media">
 
-                    <div class="caption card-body">
-                        <a href="{{ url_for('browse', req_path = item.path) }}">
-                            <h4 align="center" class="group card-title inner list-group-item-heading">{{ item.name }}</h4>
-                        </a>
-                    </div>
+                 <a href="{{ url_for('browse', req_path = item.path) }}">
+                     <object width="64" height="64" align="center" class="group list-group-image img-fluid" data="{{  url_for('static', filename=item.icon) }}" type="image/png" data-toggle="tooltip" data-placement="top" title="{{ item.path }}">
+                        <img width="64" height="64" align="center" class="group list-group-image img-fluid" src="{{ url_for('static', filename=item.default_icon) }}" alt="" data-toggle="tooltip" data-placement="top" title="{{ item.path }}"/>
+                     </object>
+                 </a>
 
+                <div class="media-body">
+                   <a href="{{ url_for('browse', req_path = item.path) }}">
+                        <h4 align="center" class="group card-title inner list-group-item-heading">{{ item.name }}</h4>
+                       {{ item.path }}
+                   </a>
                 </div>
+
             </div>
+        </li>
         {% endfor %}
-    </div>
+    </ul>
 
 {% endblock %}
